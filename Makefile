@@ -77,6 +77,10 @@ deps_dev:
 devclean:
 	rm -rf dev/*
 
+cover_report: $(shell ls -1rt `find dev/mongoose_node1 -type f -name \*.coverdata 2>/dev/null` | tail -n1)
+	erl -noshell -pa apps/*/ebin deps/*/ebin -eval 'ecoveralls:travis_ci("$?"), init:stop()'
+
+
 generate_snmp_header: apps/ejabberd/include/EJABBERD-MIB.hrl
 
 $(EJD_INCLUDE)/EJABBERD-MIB.hrl: $(EJD_PRIV_MIB)/EJABBERD-MIB.bin
